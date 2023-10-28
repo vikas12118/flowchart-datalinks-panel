@@ -4,16 +4,25 @@
   "name": "Data Links Panel",
   "id": "flowchart-datalinks-panel",
   "info": {
-    "keywords": ["panel"],
-    "description": "",
+    "description": "A simple panel that showcases how to use datalinks in a panel",
     "author": {
       "name": "Flowchart"
     },
+    "keywords": ["panel", "datalinks"],
     "logos": {
       "small": "img/logo.svg",
       "large": "img/logo.svg"
     },
-    "links": [],
+    "links": [
+      {
+        "name": "Website",
+        "url": "https://github.com/grafana/grafana-starter-panel"
+      },
+      {
+        "name": "License",
+        "url": "https://github.com/grafana/grafana-starter-panel/blob/master/LICENSE"
+      }
+    ],
     "screenshots": [],
     "version": "%VERSION%",
     "updated": "%TODAY%"
