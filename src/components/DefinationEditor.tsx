@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { SelectableValue, StandardEditorProps } from '@grafana/data';
+import { StandardEditorProps } from '@grafana/data';
 import { css } from '@emotion/css';
-import { useStyles2, Select, Switch, Icon, Tooltip, ActionMeta } from '@grafana/ui';
+import { useStyles2, ColorPickerInput, Select, Switch, Icon, Tooltip } from '@grafana/ui';
 
 const option = [
   { label: 'Dark', value: 0 },
@@ -26,7 +26,21 @@ export const DefinationEditor = ({ value, onChange }: StandardEditorProps<boolea
   const [url, setUrl] = useState<any>();
   const [isDownloadSource, setIsDownloadSource] = useState<any>(false);
   const [isScale, setIsScale] = useState<any>(false);
+  const [editoryUrl, setEditoryUrl] = useState<any>('');
   const [sourceType, setSourceType] = useState<any>();
+  const [sourceType2, setSourceType2] = useState<any>();
+  const [sourceContent, setSourceContent] = useState<any>();
+  const [url2, setUrl2] = useState<any>();
+
+  const [isCenter, setIsCenter] = useState<any>(false);
+  const [isGrid, setIsGrid] = useState<any>(false);
+  const [isBgColor, setIsBgColor] = useState<any>('rgba(0, 0, 0)');
+  const [zoomVal, setZoomVal] = useState<any>();
+  const [isLock, setIsLock] = useState<any>(false);
+  const [isAllowDraw, setIsAllowDraw] = useState<any>(false);
+  const [isEnableAnimation, setIsEnableAnimation] = useState<any>(false);
+  const [isToolTip, setIsToolTip] = useState<any>(false);
+
   const styles = useStyles2(getStyles);
 
   const setDownloadSource = () => {
@@ -37,6 +51,53 @@ export const DefinationEditor = ({ value, onChange }: StandardEditorProps<boolea
     setIsScale(!isScale);
   };
 
+  const setCenter = () => {
+    setIsCenter(!isCenter);
+  };
+
+  const setGrid = () => {
+    setIsGrid(!isGrid);
+  };
+
+  const setLock = () => {
+    setIsLock(!isLock);
+  };
+
+  const setAllowDraw = () => {
+    setIsAllowDraw(!isAllowDraw);
+  };
+
+  const setToolTip = () => {
+    setIsToolTip(!isToolTip);
+  };
+
+  const setEnableAnimation = () => {
+    setIsEnableAnimation(!isEnableAnimation);
+  };
+
+  const getEditorUrlValue = (e: any) => {
+    setEditoryUrl(e.target.value);
+    // console.log('getEditorUrlValue', e.target.value);
+  };
+
+  const getSourceContentVal = (e: any) => {
+    setSourceContent(e.target.value);
+    // console.log('getSourceContentVal', e.target.value);
+  };
+
+  const geturl2Val = (e: any) => {
+    setUrl2(e.target.value);
+    // console.log('geturl2Val', e.target.value);
+  };
+
+  const getZoomVal = (e: any) => {
+    setZoomVal(e.target.value);
+  };
+
+  const handleColorChange = (e: any) => {
+    // console.log('e', e);
+    setIsBgColor('rgba(159, 46, 46, 1)');
+  };
   return (
     <div>
       <div className="gf-form">
@@ -66,7 +127,13 @@ export const DefinationEditor = ({ value, onChange }: StandardEditorProps<boolea
                 </Tooltip>
               </span>
             </label>
-            <input type="text" className="gf-form-input width-30" placeholder="https://draw.io" />
+            <input
+              type="text"
+              onChange={getEditorUrlValue}
+              value={editoryUrl}
+              className="gf-form-input width-30"
+              placeholder="https://draw.io"
+            />
             <div className="gf-form-select-wrapper width-8">
               {/* <select className="gf-form-input">
             <option label="Dark" value="string:dark">
@@ -86,11 +153,9 @@ export const DefinationEditor = ({ value, onChange }: StandardEditorProps<boolea
                 options={option}
                 value={url}
                 allowCustomValue
-                onCreateOption={(customValue: any) => {
-                  setUrl(customValue);
-                }}
-                onChange={function (value: SelectableValue<any>, actionMeta: ActionMeta): void | {} {
-                  throw new Error('Function not implemented.');
+                onChange={(customValue) => {
+                  // console.log('customValue', customValue.label);
+                  setUrl(customValue.label);
                 }}
               />
             </div>
@@ -116,11 +181,9 @@ export const DefinationEditor = ({ value, onChange }: StandardEditorProps<boolea
                 options={optionSourceType}
                 value={sourceType}
                 allowCustomValue
-                onCreateOption={(customValue: any) => {
-                  setSourceType(customValue);
-                }}
-                onChange={function (value: SelectableValue<any>, actionMeta: ActionMeta): void | {} {
-                  throw new Error('Function not implemented.');
+                onChange={(customValue) => {
+                  // console.log('customValue', customValue.label);
+                  setSourceType(customValue.label);
                 }}
               />
             </div>
@@ -145,8 +208,10 @@ export const DefinationEditor = ({ value, onChange }: StandardEditorProps<boolea
               <textarea
                 name="options.source.xml.input"
                 className="gf-form-input width:95%"
+                value={sourceContent}
                 placeholder="This text should respect xml/plain mxgraph syntax"
                 style={{ marginTop: 0, marginBottom: 0, height: '145', lineHeight: 'normal' }}
+                onChange={getSourceContentVal}
               />
             </div>
           </div>
@@ -172,13 +237,11 @@ export const DefinationEditor = ({ value, onChange }: StandardEditorProps<boolea
             <div className="gf-form-select-wrapper width-12">
               <Select
                 options={optionSourceType}
-                value={sourceType}
+                value={sourceType2}
                 allowCustomValue
-                onCreateOption={(customValue: any) => {
-                  setSourceType(customValue);
-                }}
-                onChange={function (value: SelectableValue<any>, actionMeta: ActionMeta): void | {} {
-                  throw new Error('Function not implemented.');
+                onChange={(customValue) => {
+                  // console.log('customValue', customValue.label);
+                  setSourceType2(customValue.label);
                 }}
               />
             </div>
@@ -200,7 +263,13 @@ export const DefinationEditor = ({ value, onChange }: StandardEditorProps<boolea
                 </Tooltip>
               </span>
             </label>
-            <input type="text" className="gf-form-input width-38" placeholder="https://draw.io" />
+            <input
+              type="text"
+              onChange={geturl2Val}
+              value={url2}
+              className="gf-form-input width-38"
+              placeholder="https://draw.io"
+            />
           </div>
         </>
       )}
@@ -278,7 +347,7 @@ export const DefinationEditor = ({ value, onChange }: StandardEditorProps<boolea
               <div className="gf-form-label width-12">Center</div>
               <div className="gf-form-switch ">
                 {' '}
-                <Switch />
+                <Switch value={isCenter} onChange={setCenter} />
               </div>
             </label>
           </div>
@@ -287,17 +356,14 @@ export const DefinationEditor = ({ value, onChange }: StandardEditorProps<boolea
               <div className="gf-form-label width-12">Grid</div>
               <div className="gf-form-switch ">
                 {' '}
-                <Switch />
+                <Switch value={isGrid} onChange={setGrid} />
               </div>
             </label>
           </div>
           <div className="gf-form">
             <label className="gf-form-switch-container">
               <div className="gf-form-label width-12">Bg Color</div>
-              <div className="gf-form-switch ">
-                {' '}
-                <Switch />
-              </div>
+              <ColorPickerInput value={isBgColor} color="blue" onChange={handleColorChange} />
             </label>
           </div>
 
@@ -318,7 +384,13 @@ export const DefinationEditor = ({ value, onChange }: StandardEditorProps<boolea
                   </Tooltip>
                 </span>
               </label>
-              <input type="text" className="gf-form-input width-38" placeholder="100%" />
+              <input
+                type="text"
+                value={zoomVal}
+                onChange={getZoomVal}
+                className="gf-form-input width-38"
+                placeholder="100%"
+              />
             </div>
           ) : null}
         </div>
@@ -336,7 +408,7 @@ export const DefinationEditor = ({ value, onChange }: StandardEditorProps<boolea
             <div className="gf-form-label width-12">Lock </div>
             <div className="gf-form-switch ">
               {' '}
-              <Switch />
+              <Switch value={isLock} onChange={setLock} />
             </div>
           </label>
         </div>
@@ -350,7 +422,7 @@ export const DefinationEditor = ({ value, onChange }: StandardEditorProps<boolea
             </div>
             <div className="gf-form-switch ">
               {' '}
-              <Switch />
+              <Switch value={isAllowDraw} onChange={setAllowDraw} />
             </div>
           </label>
         </div>
@@ -368,7 +440,7 @@ export const DefinationEditor = ({ value, onChange }: StandardEditorProps<boolea
             </div>
             <div className="gf-form-switch ">
               {' '}
-              <Switch />
+              <Switch value={isEnableAnimation} onChange={setEnableAnimation} />
             </div>
           </label>
         </div>
@@ -382,7 +454,7 @@ export const DefinationEditor = ({ value, onChange }: StandardEditorProps<boolea
             </div>
             <div className="gf-form-switch ">
               {' '}
-              <Switch />
+              <Switch value={isToolTip} onChange={setToolTip} />
             </div>
           </label>
         </div>

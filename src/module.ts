@@ -3,6 +3,8 @@ import { SimpleOptions } from './types';
 import { SimplePanel } from './components/SimplePanel';
 import { SimpleEditor } from './components/SimpleEditor';
 import { DefinationEditor } from './components/DefinationEditor';
+// import { RuleMapping } from './components/RuleMapping';
+import { RuleView } from './components/RuleView';
 
 export const plugin = new PanelPlugin<SimpleOptions>(SimplePanel).setPanelOptions((builder) => {
   return builder
@@ -19,5 +21,12 @@ export const plugin = new PanelPlugin<SimpleOptions>(SimplePanel).setPanelOption
       name: 'Definition',
       editor: DefinationEditor,
       category: ['Flowchart'],
+    })
+    .addCustomEditor({
+      id: 'Mapping',
+      path: 'Mapping',
+      name: 'Mapping',
+      editor: RuleView,
+      category: ['Mapping'],
     });
 });

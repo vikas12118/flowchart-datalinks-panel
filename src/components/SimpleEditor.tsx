@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Tooltip, Select, Icon, ActionMeta } from '@grafana/ui';
-import { SelectableValue, StandardEditorProps } from '@grafana/data';
+import { Tooltip, Select, Icon } from '@grafana/ui';
+import { StandardEditorProps } from '@grafana/data';
 
 export const SimpleEditor = ({}: StandardEditorProps<boolean>) => {
   const option = [{ label: 'Main', value: 0 }];
@@ -30,15 +30,24 @@ export const SimpleEditor = ({}: StandardEditorProps<boolean>) => {
               </span>
             </span>
             <div className="gf-form-select-wrapper width-12">
+              {/* <Select
+                options={option}
+                value={value}
+                allowCustomValue
+                onCreateOption={customValue => {
+                  setValue(customValue);
+                } } 
+                onChange={function (value: SelectableValue<any>, actionMeta: ActionMeta): void | {} {
+                  throw new Error('Function not implemented.');
+                } } 
+                   /> */}
+
               <Select
                 options={option}
                 value={value}
                 allowCustomValue
-                onCreateOption={(customValue) => {
+                onChange={(customValue) => {
                   setValue(customValue);
-                }}
-                onChange={function (value: SelectableValue<any>, actionMeta: ActionMeta): void | {} {
-                  throw new Error('Function not implemented.');
                 }}
               />
             </div>
