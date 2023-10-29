@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StandardEditorProps } from '@grafana/data';
+// import { StandardEditorProps } from '@grafana/data';
 import { Select } from '@grafana/ui';
 
 const aggregationOption = [
@@ -36,7 +36,7 @@ const unitOption = [
   { label: 'Data rate', value: 8 },
 ];
 
-export const RuleView = ({}: StandardEditorProps<boolean>) => {
+export const RuleView = ({}) => {
   const [settingEnabled, setSettingEnabled] = useState<boolean>(false);
   const [aggregation, setAggregation] = useState<any>();
   const [type, setType] = useState<any>();
@@ -46,7 +46,7 @@ export const RuleView = ({}: StandardEditorProps<boolean>) => {
   };
   return (
     <div className="editor-row">
-      <div>
+      <div style={{backgroundColor: 'black', color: 'white', marginBottom: '20px'}}>
         <div className="rule-item" onMouseOver={() => {}} onMouseLeave={() => {}}>
           <div id="left" style={{ float: 'left', width: '30%' }} onClick={setSetting}>
             <span className="rule-extend">

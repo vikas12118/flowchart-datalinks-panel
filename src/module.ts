@@ -3,8 +3,7 @@ import { SimpleOptions } from './types';
 import { SimplePanel } from './components/SimplePanel';
 import { SimpleEditor } from './components/SimpleEditor';
 import { DefinationEditor } from './components/DefinationEditor';
-// import { RuleMapping } from './components/RuleMapping';
-import { RuleView } from './components/RuleView';
+import { RuleMapping } from './components/RuleMapping';
 
 export const plugin = new PanelPlugin<SimpleOptions>(SimplePanel).setPanelOptions((builder) => {
   return builder
@@ -26,7 +25,7 @@ export const plugin = new PanelPlugin<SimpleOptions>(SimplePanel).setPanelOption
       id: 'Mapping',
       path: 'Mapping',
       name: 'Mapping',
-      editor: RuleView,
+      editor: RuleMapping,
       category: ['Mapping'],
     });
 });
