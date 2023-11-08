@@ -36,7 +36,7 @@ const unitOption = [
   { label: 'Data rate', value: 8 },
 ];
 
-export const RuleView = ({}) => {
+export const RuleView = ({ ruleNo }: { ruleNo: any }) => {
   const [settingEnabled, setSettingEnabled] = useState<boolean>(false);
   const [aggregation, setAggregation] = useState<any>();
   const [type, setType] = useState<any>();
@@ -46,13 +46,13 @@ export const RuleView = ({}) => {
   };
   return (
     <div className="editor-row">
-      <div style={{backgroundColor: 'black', color: 'white', marginBottom: '20px'}}>
+      <div style={{ backgroundColor: 'black', color: 'white', marginBottom: '20px' }}>
         <div className="rule-item" onMouseOver={() => {}} onMouseLeave={() => {}}>
           <div id="left" style={{ float: 'left', width: '30%' }} onClick={setSetting}>
             <span className="rule-extend">
               <i className={`fa ${!settingEnabled ? 'fa-chevron-right' : 'fa-chevron-down'}`}></i>
             </span>
-            <span className="rule-title">1 : Rule [myRule]</span>
+            <span className="rule-title">{ruleNo} : Rule [myRule]</span>
           </div>
           <div id="center" style={{ display: 'inline-block', margin: '0 auto', width: '50%' }}>
             <div style={{ display: 'inline-block', marginRight: '5px' }}>
