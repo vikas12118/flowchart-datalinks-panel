@@ -7,26 +7,45 @@ export const RuleMapping = ({}: StandardEditorProps<boolean>) => {
 
   const addCounter = () => {
     const newKey = counters.length;
-    const newCounter = <RuleView key={newKey} ruleNo={newKey + 1} />;
+    const newRuleNo = counters.length > 0 ? counters.length + 1 : 1;
+    const newCounter = <RuleView key={newKey} ruleNo={newRuleNo} />;
     setCounters([...counters, newCounter]);
+  };
+
+  const cloneCounter = (index: number) => {
+    const clonedCounter = <RuleView key={counters.length} ruleNo={counters.length + 1} />;
+    const updatedCounters = [...counters.slice(0, index + 1), clonedCounter, ...counters.slice(index + 1)];
+
+    // Reassign ruleNo for all components
+    const reindexedCounters = updatedCounters.map((counter, i) => {
+      return React.cloneElement(counter as React.ReactElement, { key: i, ruleNo: i + 1 });
+    });
+
+    setCounters(reindexedCounters);
   };
 
   const removeCounter = (index: number) => {
     const updatedCounters = counters.filter((_, i) => i !== index);
-    setCounters(updatedCounters);
+
+    // Reassign ruleNo for all remaining components
+    const reindexedCounters = updatedCounters.map((counter, i) => {
+      return React.cloneElement(counter as React.ReactElement, { key: i, ruleNo: i + 1 });
+    });
+
+    setCounters(reindexedCounters);
   };
 
   const moveCounter = (index: number, direction: 'up' | 'down') => {
     const updatedCounters = [...counters];
 
     if (direction === 'up' && index > 0) {
-      const temp = updatedCounters[index - 1];
-      updatedCounters[index - 1] = updatedCounters[index];
-      updatedCounters[index] = temp;
+      const temp = updatedCounters[index];
+      updatedCounters[index] = updatedCounters[index - 1];
+      updatedCounters[index - 1] = temp;
     } else if (direction === 'down' && index < counters.length - 1) {
-      const temp = updatedCounters[index + 1];
-      updatedCounters[index + 1] = updatedCounters[index];
-      updatedCounters[index] = temp;
+      const temp = updatedCounters[index];
+      updatedCounters[index] = updatedCounters[index + 1];
+      updatedCounters[index + 1] = temp;
     }
 
     setCounters(updatedCounters);
@@ -48,9 +67,9 @@ export const RuleMapping = ({}: StandardEditorProps<boolean>) => {
           {index === counters.length - 1 && counters.length > 1 && (
             <button onClick={() => moveCounter(index, 'up')}>Up</button>
           )}
+          <button onClick={() => cloneCounter(index)}>Clone</button>
         </div>
       ))}
-
       <div className="editor-row">
         <div className="gf-form-button-row">
           <button className="btn btn-inverse" onClick={addCounter}>
@@ -61,5 +80,3 @@ export const RuleMapping = ({}: StandardEditorProps<boolean>) => {
     </div>
   );
 };
-
-export default RuleMapping;
